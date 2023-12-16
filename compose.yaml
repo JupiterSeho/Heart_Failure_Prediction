@@ -1,3 +1,92 @@
+# version: '3'
+
+# services:
+#   prometheus:
+#     image: prom/prometheus
+#     container_name: prometheus
+#     command:
+#       - '--config.file=/etc/prometheus/prometheus.yml'
+#     ports:
+#       - 9090:9090
+#     restart: unless-stopped
+#     volumes:
+#       - ./prometheus:/etc/prometheus
+#       - prom_data:/prometheus
+#     depends_on:
+#       - fastapi
+
+#   grafana:
+#     image: grafana/grafana
+#     container_name: grafana
+#     ports:
+#       - 3000:3000
+#     restart: unless-stopped
+#     environment:
+#       - GF_SECURITY_ADMIN_USER=admin
+#       - GF_SECURITY_ADMIN_PASSWORD=grafana
+#     volumes:
+#       - ./grafana:/etc/grafana/provisioning/datasources
+#     depends_on:
+#       - prometheus
+
+#   fastapi:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: fastapi
+#     ports:
+#       - 5000:5000
+#     restart: unless-stopped
+#     depends_on:
+#       - prometheus
+
+# version: '3'
+
+# services:
+#   prometheus:
+#     image: prom/prometheus
+#     container_name: prometheus
+#     command:
+#       - '--config.file=/etc/prometheus/prometheus.yml'
+#     ports:
+#       - 9090:9090
+#     restart: unless-stopped
+#     volumes:
+#       - ./prometheus:/etc/prometheus
+#       - prom_data:/prometheus  # Ajoutez cette ligne pour définir le volume prom_data
+#     depends_on:
+#       - fastapi
+
+#   grafana:
+#     image: grafana/grafana
+#     container_name: grafana
+#     ports:
+#       - 3000:3000
+#     restart: unless-stopped
+#     environment:
+#       - GF_SECURITY_ADMIN_USER=admin
+#       - GF_SECURITY_ADMIN_PASSWORD=grafana
+#     volumes:
+#       - ./grafana:/etc/grafana/provisioning/datasources
+#     depends_on:
+#       - prometheus
+
+#   fastapi:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: fastapi
+#     ports:
+#       - 5000:5000
+#     restart: unless-stopped
+#     depends_on:
+#       - prometheus
+
+# volumes:
+#   prom_data:  # Ajoutez cette section pour définir le volume prom_data
+
+version: '3'
+
 services:
   prometheus:
     image: prom/prometheus
@@ -10,6 +99,9 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prom_data:/prometheus
+    depends_on:
+      - fastapi
+
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -20,6 +112,19 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
-      - ./grafana:/etc/grafana/provisioning/datasources
+      - ./grafana:/etc/grafana/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards 
+    depends_on:
+      - prometheus
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+
 volumes:
   prom_data:

@@ -7,3 +7,16 @@ datasources:
     isDefault: true
     access: proxy
     editable: true
+
+  - name: Consommation
+    folder: "yak-dashboards"
+    type: "file"
+    options:
+      path: "/var/lib/grafana/Dashboards"
+
+  # new datasource for FastAPI metrics
+  - name: FastAPI Metrics
+    type: prometheus
+    url: http://fastapi:5000
+    access: proxy
+    editable: true
