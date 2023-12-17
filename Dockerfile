@@ -18,4 +18,4 @@ EXPOSE 5000
 ENV prometheus_multiproc_dir /tmp
 
 # Run FastAPI when the container launches
-CMD ["uvicorn", "api_heart_failure:app", "--host", "0.0.0.0", "--port", "5000", "--log-level", "info", "--workers", "2"]
+CMD ["uvicorn", "api_heart_failure:app", "--host", "127.0.0.1", "--port", "5000", "--log-level", "info", "--workers", "2"]
