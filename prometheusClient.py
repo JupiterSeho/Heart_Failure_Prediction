@@ -1,11 +1,3 @@
-# from prometheus_client import Counter, make_asgi_app
-
-# survived_counter = Counter("survived", "Counter for survived")
-# not_survived_counter = Counter(
-#     "not_survived", "Counter for not survived")
-
-# metrics_app = make_asgi_app()
-
 from prometheus_client import Counter, make_asgi_app
 
 survived_counter = Counter("survived", "Counter for survived")
